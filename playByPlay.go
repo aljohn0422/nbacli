@@ -33,6 +33,7 @@ type playByPlayParser struct {
 	Game            Game
 	PeriodMapper    map[int]string
 	PlayByPlay      playByPlay
+	PrintBox        string
 }
 
 func convertClock(clock string) string {
@@ -79,12 +80,30 @@ func (p *playByPlayParser) process() {
 }
 
 func (p *playByPlayParser) output() {
+
 	actions := p.PlayByPlay.Game.Actions
 	for _, action := range actions {
 		if action.ActionNumber > p.CurrentActionID && len(action.Description) > 0 {
 			fmt.Println(action.Printed)
 		}
 	}
+
+	lastAction := actions[len(actions)-1]
+	if p.CurrentActionID < lastAction.ActionNumber {
+		switch lastAction.ActionType {
+		case "period":
+			p.PrintBox = "full"
+		case "game":
+			p.PrintBox = "full"
+		case "timeout":
+			p.PrintBox = "oncourt"
+		default:
+			p.PrintBox = "None"
+		}
+	} else {
+		p.PrintBox = "None"
+	}
+
 	p.CurrentActionID = actions[len(actions)-1].ActionNumber
 }
 

@@ -24,7 +24,13 @@ func main() {
 
 	games := scoreboard.TodaysScoreboard.Scoreboard.Games
 	pbp := NewPlayByPlay(games[index])
+	box := NewBoxscore(games[index].GameID)
 	for {
+		if pbp.PrintBox == "full" {
+			box.update(true)
+		} else if pbp.PrintBox == "oncourt" {
+			box.update(false)
+		}
 		time.Sleep(time.Second * 10)
 		pbp.update()
 	}
