@@ -3,6 +3,9 @@
 - Show boxscore at timeout (for players on court) and period change (full box).
 - Timezone default to system time.
 
+# Screenshot
+!["Play by play and boxscore screenshot."](./markdown/box.png)
+
 # Installation
 ## With binary
 
